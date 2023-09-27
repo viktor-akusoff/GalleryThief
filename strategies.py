@@ -1,13 +1,23 @@
-from abc import ABC
+from abc import ABC, abstractmethod
+from typing import List
+
+StealingResult = List[str]
 
 
 class StealingStrategy(ABC):
-    pass
+
+    @abstractmethod
+    def get_images(self, prompt: str, count: int) -> StealingResult:
+        pass
 
 
 class StealingFromYandex(StealingStrategy):
-    pass
+
+    def get_imagess(self, prompt: str, count: int) -> StealingResult:
+        return []
 
 
 class StealingFromGoogle(StealingStrategy):
-    pass
+
+    def get_images(self, prompt: str, count: int) -> StealingResult:
+        return []
