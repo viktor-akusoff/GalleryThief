@@ -44,7 +44,7 @@ class YandexImageType(Enum):
 class YandexFileType(Enum):
     PNG = 'png'
     JPEG = 'jpeg'
-    GIF = 'gif'
+    GIF = 'gifan'
     ANY = 'any'
 
 
@@ -105,22 +105,22 @@ class StealingFromYandex(StealingStrategy):
         params = {"text": prompt}
 
         if self._size != YandexSizes.ANY:
-            params["isize"] = str(self._size)
+            params["isize"] = self._size.value
 
         if self._orientation != YandexOrientation.ANY:
-            params["iorient"] = str(self._orientation)
+            params["iorient"] = self._orientation.value
 
         if self._image_type != YandexImageType.ANY:
-            params["type"] = str(self._image_type)
+            params["type"] = self._image_type.value
 
         if self._file_type != YandexFileType.ANY:
-            params["itype"] = str(self._file_type)
+            params["itype"] = self._file_type.value
 
         if self._color != YandexColor.ANY:
-            params['icolor'] = str(self._color)
+            params["icolor"] = self._color.value
 
         if self._site:
-            params["site"] = str(self._site)
+            params["site"] = self._site
 
         if self._recent:
             params["recent"] = "7D"
@@ -151,3 +151,11 @@ class StealingFromGoogle(StealingStrategy):
 
     def get_images(self, prompt: str, count: int) -> StealingResult:
         return []
+
+
+test = StealingFromYandex(
+    file_type=YandexFileType.GIF,
+    image_type=YandexImageType.LINEART
+)
+
+print(test.get_images("Киборг", 3))
