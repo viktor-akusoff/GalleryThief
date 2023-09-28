@@ -95,9 +95,9 @@ class StealingFromYandex(StealingStrategy):
         self._orientation: YandexOrientation = orientation
         self._image_type: YandexImageType = image_type
         self._file_type: YandexFileType = file_type
+        self._color: YandexColor = color
         self._site: str = site
         self._recent: bool = recent
-        self._color: YandexColor = color
 
         self._mask = RobberMask(
             source=PROXY_SOURCE,
@@ -112,6 +112,54 @@ class StealingFromYandex(StealingStrategy):
     @size.setter
     def size(self, size) -> None:
         self._size = size
+
+    @property
+    def orientation(self) -> YandexOrientation:
+        return self._orientation
+
+    @orientation.setter
+    def orientation(self, orientation) -> None:
+        self._orientation = orientation
+
+    @property
+    def image_type(self) -> YandexImageType:
+        return self._image_type
+
+    @image_type.setter
+    def image_type(self, image_type) -> None:
+        self._image_type = image_type
+
+    @property
+    def file_type(self) -> YandexFileType:
+        return self._file_type
+
+    @file_type.setter
+    def file_type(self, file_type) -> None:
+        self._file_type = file_type
+
+    @property
+    def color(self) -> YandexColor:
+        return self._color
+
+    @color.setter
+    def color(self, color) -> None:
+        self._color = color
+
+    @property
+    def site(self) -> str:
+        return self._site
+
+    @site.setter
+    def site(self, site) -> None:
+        self._site = site
+
+    @property
+    def recent(self) -> bool:
+        return self._recent
+
+    @recent.setter
+    def recent(self, recent) -> None:
+        self._recent = recent
 
     def get_images(self, prompt: str, count: int = 1) -> StealingResult:
 
