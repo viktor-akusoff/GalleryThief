@@ -56,7 +56,8 @@ class StealingFromYandex(StealingStrategy):
         orientation: YandexOrientation = YandexOrientation.ANY,
         image_type: YandexImageType = YandexImageType.ANY,
         file_type: YandexFileType = YandexFileType.ANY,
-        site: str = ''
+        site: str = '',
+        recent: bool = False,
     ):
 
         self._size: YandexSizes = size
@@ -64,6 +65,7 @@ class StealingFromYandex(StealingStrategy):
         self._image_type: YandexImageType = image_type
         self._file_type: YandexFileType = file_type
         self._site: str = site
+        self._recent: bool = recent
 
         self._mask = RobberMask(
             source=PROXY_SOURCE,
@@ -98,7 +100,10 @@ class StealingFromYandex(StealingStrategy):
             params["itype"] = str(self._file_type)
 
         if self._site:
-            params['site'] = str(self._site)
+            params["site"] = str(self._site)
+
+        if self._recent:
+            params["recent"] = "7D"
 
         request = self._mask.reach_out(params)
 
