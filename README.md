@@ -3,7 +3,12 @@
 
 ![Gallery Thief Logo](https://i.imgur.com/j3TgyZc.png)
 
-Simple python package for scraping images from different search engines by prompt.
+> Gallery Thief, an artful liar\
+> Cunningly steals your heart's desire.\
+> Python library, so refined,\
+> Your digital treasures are its' prize.
+
+*YandexGPT2, 2023*
 
 ## Quick Start
 
