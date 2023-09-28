@@ -23,13 +23,13 @@ class YandexSizes(Enum):
     MEDIUM = 'medium'
     SMALL = 'small'
     WALLPAPER = 'wallpaper'
-    ANY = 'ANY'
+    ANY = 'any'
 
 
 class YandexOrientation(Enum):
     HORIZONTAL = 'horizontal'
     VERTICAL = 'vertical'
-    ANY = 'ANY'
+    ANY = 'any'
 
 
 class YandexImageType(Enum):
@@ -38,14 +38,29 @@ class YandexImageType(Enum):
     LINEART = 'lineart'
     FACE = 'face'
     DEMOTIVATOR = 'demotivator'
-    ANY = 'ANY'
+    ANY = 'any'
 
 
 class YandexFileType(Enum):
     PNG = 'png'
     JPEG = 'jpeg'
     GIF = 'gif'
-    ANY = 'ANY'
+    ANY = 'any'
+
+
+class YandexColor(Enum):
+    COLOR = 'color'
+    GRAY = 'gray'
+    RED = 'red'
+    ORANGE = 'orange'
+    YELLOW = 'yellow'
+    CYAN = 'cyan'
+    GREEN = 'green'
+    BLUE = 'blue'
+    VIOLET = 'violet'
+    WHITE = 'white'
+    BLACK = 'black'
+    ANY = 'any'
 
 
 class StealingFromYandex(StealingStrategy):
@@ -56,6 +71,7 @@ class StealingFromYandex(StealingStrategy):
         orientation: YandexOrientation = YandexOrientation.ANY,
         image_type: YandexImageType = YandexImageType.ANY,
         file_type: YandexFileType = YandexFileType.ANY,
+        color: YandexColor = YandexColor.ANY,
         site: str = '',
         recent: bool = False,
     ):
@@ -66,6 +82,7 @@ class StealingFromYandex(StealingStrategy):
         self._file_type: YandexFileType = file_type
         self._site: str = site
         self._recent: bool = recent
+        self._color: YandexColor = color
 
         self._mask = RobberMask(
             source=PROXY_SOURCE,
@@ -98,6 +115,9 @@ class StealingFromYandex(StealingStrategy):
 
         if self._file_type != YandexFileType.ANY:
             params["itype"] = str(self._file_type)
+
+        if self._color != YandexColor.ANY:
+            params['icolor'] = str(self._color)
 
         if self._site:
             params["site"] = str(self._site)
