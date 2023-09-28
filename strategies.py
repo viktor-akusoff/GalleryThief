@@ -40,18 +40,27 @@ class YandexImageType(Enum):
     ANY = 'ANY'
 
 
+class YandexFileType(Enum):
+    PNG = 'png'
+    JPEG = 'jpeg'
+    GIF = 'gif'
+    ANY = 'ANY'
+
+
 class StealingFromYandex(StealingStrategy):
 
     def __init__(
         self,
         size: YandexSizes = YandexSizes.ANY,
         orientation: YandexOrientation = YandexOrientation.ANY,
-        image_type: YandexImageType = YandexImageType.ANY
+        image_type: YandexImageType = YandexImageType.ANY,
+        file_type: YandexFileType = YandexFileType.ANY,
     ):
 
         self._size: YandexSizes = size
         self._orientation: YandexOrientation = orientation
         self._image_type: YandexImageType = image_type
+        self._file_type: YandexFileType = file_type
 
         self._mask = RobberMask(
             source=PROXY_SOURCE,
@@ -79,8 +88,11 @@ class StealingFromYandex(StealingStrategy):
         if self._orientation != YandexOrientation.ANY:
             params["iorient"] = str(self._orientation)
 
-        if self._orientation != YandexImageType.ANY:
+        if self._image_type != YandexImageType.ANY:
             params["type"] = str(self._image_type)
+
+        if self._file_type != YandexFileType.ANY:
+            params["itype"] = str(self._file_type)
 
         request = self._mask.reach_out(params)
 
