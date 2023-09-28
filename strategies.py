@@ -96,7 +96,7 @@ class StealingFromYandex(StealingStrategy):
 
         if self._file_type != YandexFileType.ANY:
             params["itype"] = str(self._file_type)
-            
+
         if self._site:
             params['site'] = str(self._site)
 
