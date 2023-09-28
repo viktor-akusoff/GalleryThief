@@ -1,10 +1,10 @@
-import requests
 import json
 from abc import ABC, abstractmethod
 from typing import List
 from enum import Enum
 from bs4 import BeautifulSoup
-from fake_useragent import UserAgent
+
+from mask import RobberMask
 
 
 StealingResult = List[str]
@@ -28,8 +28,13 @@ class StealingFromYandex(StealingStrategy):
 
     def __init__(self, size: YandexSizes = YandexSizes.ANY):
         self._size = size
+        self._mask = RobberMask(
+            source="https://freeproxyupdate.com/files/txt/http.txt",
+            url="https://yandex.ru/images/search",
+            proxies_limit=10
+        )
 
-    @property    
+    @property
     def size(self):
         return self._size
 
@@ -38,7 +43,6 @@ class StealingFromYandex(StealingStrategy):
         self._size = size
 
     def get_images(self, prompt: str, count: int = 1) -> StealingResult:
-        ua = UserAgent()
 
         result: StealingResult = []
 
@@ -47,21 +51,16 @@ class StealingFromYandex(StealingStrategy):
         if self._size != YandexSizes.ANY:
             params["isize"] = str(self._size)
 
-        request = requests.get(
-            "https://yandex.ru/images/search",
-            params=params,
-            headers={
-                "User-Agent": ua.random,
-            },
-        )
+        request = self._mask.reach_out(params)
 
-        soup = BeautifulSoup(request.text, 'html.parser')
+        soup = BeautifulSoup(request, 'html.parser')
         items_place = soup.find('div', {"class": "serp-list"})
 
         if items_place is None:
             return result
 
-        items = items_place.find_all("div", {"class": "serp-item"})
+        item_params = ("div", {"class": "serp-item"})
+        items = items_place.find_all(*item_params)  # type: ignore
         counter = 0
 
         for item in items:
@@ -78,3 +77,9 @@ class StealingFromGoogle(StealingStrategy):
 
     def get_images(self, prompt: str, count: int) -> StealingResult:
         return []
+
+
+test = StealingFromYandex(YandexSizes.SMALL)
+print(test.get_images("Красное вино"))
+print(test.get_images("Каша гречневая"))
+print(test.get_images("Мидии в соевом соусе"))
