@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 
 from mask import RobberMask
 
+PROXY_SOURCE = "https://freeproxyupdate.com/files/txt/http.txt"
 
 StealingResult = List[str]
 
@@ -29,7 +30,7 @@ class StealingFromYandex(StealingStrategy):
     def __init__(self, size: YandexSizes = YandexSizes.ANY):
         self._size = size
         self._mask = RobberMask(
-            source="https://freeproxyupdate.com/files/txt/http.txt",
+            source=PROXY_SOURCE,
             url="https://yandex.ru/images/search",
             proxies_limit=10
         )
