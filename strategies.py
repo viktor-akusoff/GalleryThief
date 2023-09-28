@@ -25,10 +25,21 @@ class YandexSizes(Enum):
     ANY = 'ANY'
 
 
+class YandexOrientation(Enum):
+    HORIZONTAL = 'horizontal'
+    VERTICAL = 'vertical'
+    ANY = 'ANY'
+
+
 class StealingFromYandex(StealingStrategy):
 
-    def __init__(self, size: YandexSizes = YandexSizes.ANY):
-        self._size = size
+    def __init__(
+        self,
+        size: YandexSizes = YandexSizes.ANY,
+        orientation: YandexOrientation = YandexOrientation.ANY
+    ):
+        self._size: YandexSizes = size
+        self._orientation: YandexOrientation = orientation
         self._mask = RobberMask(
             source=PROXY_SOURCE,
             url="https://yandex.ru/images/search",
@@ -36,11 +47,11 @@ class StealingFromYandex(StealingStrategy):
         )
 
     @property
-    def size(self):
+    def size(self) -> YandexSizes:
         return self._size
 
     @size.setter
-    def size(self, size):
+    def size(self, size) -> None:
         self._size = size
 
     def get_images(self, prompt: str, count: int = 1) -> StealingResult:
@@ -51,6 +62,9 @@ class StealingFromYandex(StealingStrategy):
 
         if self._size != YandexSizes.ANY:
             params["isize"] = str(self._size)
+
+        if self._size != YandexOrientation.ANY:
+            params["iorient"] = str(self._orientation)
 
         request = self._mask.reach_out(params)
 
