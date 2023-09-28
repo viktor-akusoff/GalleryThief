@@ -22,6 +22,7 @@ class YandexSizes(Enum):
     LARGE = 'large'
     MEDIUM = 'medium'
     SMALL = 'small'
+    WALLPAPER = 'wallpaper'
     ANY = 'ANY'
 
 
