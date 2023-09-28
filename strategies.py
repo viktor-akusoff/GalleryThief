@@ -31,15 +31,28 @@ class YandexOrientation(Enum):
     ANY = 'ANY'
 
 
+class YandexImageType(Enum):
+    PHOTO = 'photo'
+    CLIPART = 'clipart'
+    LINEART = 'lineart'
+    FACE = 'face'
+    DEMOTIVATOR = 'demotivator'
+    ANY = 'ANY'
+
+
 class StealingFromYandex(StealingStrategy):
 
     def __init__(
         self,
         size: YandexSizes = YandexSizes.ANY,
-        orientation: YandexOrientation = YandexOrientation.ANY
+        orientation: YandexOrientation = YandexOrientation.ANY,
+        image_type: YandexImageType = YandexImageType.ANY
     ):
+
         self._size: YandexSizes = size
         self._orientation: YandexOrientation = orientation
+        self._image_type: YandexImageType = image_type
+
         self._mask = RobberMask(
             source=PROXY_SOURCE,
             url="https://yandex.ru/images/search",
@@ -65,6 +78,9 @@ class StealingFromYandex(StealingStrategy):
 
         if self._size != YandexOrientation.ANY:
             params["iorient"] = str(self._orientation)
+
+        if self._orientation != YandexImageType.ANY:
+            params["type"] = str(self._image_type)
 
         request = self._mask.reach_out(params)
 
