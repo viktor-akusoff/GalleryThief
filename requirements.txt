@@ -2,3 +2,4 @@ requests==2.31.0
 types-requests==2.31.0.6
 bs4==0.0.1
 fake-useragent==1.2.1
+numpy==1.26.0
