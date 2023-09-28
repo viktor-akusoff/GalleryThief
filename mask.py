@@ -1,9 +1,9 @@
 import random
 import time
 import requests
-from numpy import random as rnd
 from typing import List, Dict
-from fake_useragent import UserAgent
+from numpy import random as rnd  # type: ignore
+from fake_useragent import UserAgent # type: ignore
 
 Proxy = Dict[str, str]
 ProxyList = List[Proxy]
