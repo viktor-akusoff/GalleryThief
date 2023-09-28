@@ -4,7 +4,7 @@ from typing import List
 from enum import Enum
 from bs4 import BeautifulSoup
 
-from mask import RobberMask
+from .mask import RobberMask
 
 PROXY_SOURCE = "https://freeproxyupdate.com/files/txt/http.txt"
 

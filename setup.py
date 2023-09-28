@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='gallery_thief',
-    version='0.1.0-alpha',
+    version='0.1.1',
     license='MIT',
     author="Kirill Voloshin",
     author_email='kirill.voloshin.98@ya.ru',

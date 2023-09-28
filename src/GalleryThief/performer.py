@@ -1,4 +1,4 @@
-from strategies import StealingStrategy
+from .strategies import StealingStrategy
 
 
 class Thief():
