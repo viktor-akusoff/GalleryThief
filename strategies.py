@@ -76,7 +76,7 @@ class StealingFromYandex(StealingStrategy):
         if self._size != YandexSizes.ANY:
             params["isize"] = str(self._size)
 
-        if self._size != YandexOrientation.ANY:
+        if self._orientation != YandexOrientation.ANY:
             params["iorient"] = str(self._orientation)
 
         if self._orientation != YandexImageType.ANY:
