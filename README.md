@@ -3,7 +3,7 @@
 
 ![Gallery Thief Logo](https://i.imgur.com/j3TgyZc.png)
 
-Simple python for package scraping images by prompt from different search engines.
+Simple python package for scraping images from different search engines by prompt.
 
 ## Quick Start
 
