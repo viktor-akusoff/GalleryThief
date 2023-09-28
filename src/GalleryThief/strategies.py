@@ -64,6 +64,9 @@ class YandexColor(Enum):
 
 
 class StealingFromYandex(StealingStrategy):
+    '''
+    Implements parsing algorithm for Yandex Images.
+    '''
 
     def __init__(
         self,
@@ -75,6 +78,18 @@ class StealingFromYandex(StealingStrategy):
         site: str = '',
         recent: bool = False,
     ):
+        '''
+        Initializes strategy for getting images from Yandex with given params.
+
+        size -> (SMALL, MIDDLE, LARGE, WALLPAPER, ANY)\n
+        orientation -> (HORIZONTAL, VERTICAL, ANY)\n
+        image_type -> (PHOTO, CLIPART, LINEART, FACE, DEMOTIVATOR, ANY)\n
+        file_type -> (PNG, JPEG, GIF, ANY)\n
+        color -> (COLOR, GRAY, RED, ORANGE, YELLOW, CYAN, GREEN, BLUE, VIOLET,\
+                  CYAN, WHITE, BLACK, ANY)\n
+        site -> specifies the site images are from.\n
+        recent -> if True looks for images published in last seven days.
+        '''
 
         self._size: YandexSizes = size
         self._orientation: YandexOrientation = orientation
