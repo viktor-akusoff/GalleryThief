@@ -56,12 +56,14 @@ class StealingFromYandex(StealingStrategy):
         orientation: YandexOrientation = YandexOrientation.ANY,
         image_type: YandexImageType = YandexImageType.ANY,
         file_type: YandexFileType = YandexFileType.ANY,
+        site: str = ''
     ):
 
         self._size: YandexSizes = size
         self._orientation: YandexOrientation = orientation
         self._image_type: YandexImageType = image_type
         self._file_type: YandexFileType = file_type
+        self._site: str = site
 
         self._mask = RobberMask(
             source=PROXY_SOURCE,
@@ -94,6 +96,9 @@ class StealingFromYandex(StealingStrategy):
 
         if self._file_type != YandexFileType.ANY:
             params["itype"] = str(self._file_type)
+            
+        if self._site:
+            params['site'] = str(self._site)
 
         request = self._mask.reach_out(params)
 
