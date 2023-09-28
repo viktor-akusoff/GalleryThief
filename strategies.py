@@ -151,11 +151,3 @@ class StealingFromGoogle(StealingStrategy):
 
     def get_images(self, prompt: str, count: int) -> StealingResult:
         return []
-
-
-test = StealingFromYandex(
-    file_type=YandexFileType.GIF,
-    image_type=YandexImageType.LINEART
-)
-
-print(test.get_images("Киборг", 3))
