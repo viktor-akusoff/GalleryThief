@@ -77,9 +77,3 @@ class StealingFromGoogle(StealingStrategy):
 
     def get_images(self, prompt: str, count: int) -> StealingResult:
         return []
-
-
-test = StealingFromYandex(YandexSizes.SMALL)
-print(test.get_images("Красное вино"))
-print(test.get_images("Каша гречневая"))
-print(test.get_images("Мидии в соевом соусе"))
