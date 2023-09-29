@@ -1,10 +1,11 @@
 # Gallery Thief
 
 
-![Gallery Thief Logo](https://i.imgur.com/j3TgyZc.png)
+<p align="center"><img src="https://i.imgur.com/j3TgyZc.png"></p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Upload Python Package](https://github.com/viktor-akusoff/GalleryThief/actions/workflows/python-publish.yml/badge.svg)](https://github.com/viktor-akusoff/GalleryThief/actions/workflows/python-publish.yml)
+
 
 > Gallery Thief, an artful liar\
 > Cunningly steals your heart's desire.\
