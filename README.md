@@ -29,9 +29,13 @@ how does it work:
 ```
 from GalleryThief.performer import Thief
 from GalleryThief.strategies import StealingFromYandex
+from GalleryThief.mask import RobberMask
+
+PROXY_SOURCE = "https://freeproxyupdate.com/files/txt/http.txt"
 
 strategy = StealingFromYandex()  # Creating strategy for getting images
-thief = Thief(strategy)  # Creating thief using this strategy
+mask = RobberMask(PROXY_SOURCE, 10)  # Creating mask to hide behind proxies
+thief = Thief(strategy, mask)  # Creating thief using given strategy and mask
 
 # Ordering thief to get one image of Pluto from yandex images
 result = thief.get_images_list(['Photo of Pluto', 1])
@@ -50,8 +54,7 @@ You should know them to achieve full potential of this little package.
 Thief is your loyal performer for your mischievous deeds involving some
 images web-scraping. You can find his class in ```GalleryThief.performer```.
 
-To create new instance of Thief you must add ```StealingStrategy``` in
-its constructor (we'll talk about strategies later). After that you can easily give orders to your helpful minion. Your put them in the simple python lists using special format: ```["Prompt text": str, number_of_images: int]```. To make Thief execute these orders you need call its only method ```get_images_list```. This method can accept as many orders as you wish. For example:
+To create new instance of Thief you must inject ```StealingStrategy``` and ```RobberMask``` in its constructor (we'll talk about strategies and masks later). After that you can easily give orders to your helpful minion. Your put them in the simple python lists using special format: ```["Prompt text": str, number_of_images: int]```. To make Thief execute these orders you need call its only method ```get_images_list```. This method can accept as many orders as you wish. For example:
 
 ```
 result = thief.get_images_list(
@@ -63,10 +66,44 @@ result = thief.get_images_list(
 ```
 It will return dictionary which keys are your prompts, every key in such dictionary stores list of urls to images it found using ```StealingStrategy```.
 
-Your also can change strategy on fly using Thief's setter:
+Your also can change strategy and mask on fly using Thief's setters:
 ```
 thief.strategy = StealingFromGoogle()
+thief.mask = RobberMask(ANOTHER_PROXY_SOURCE, 42)
 ```
+
+### RobberMask Class
+
+What a thief goes on his job without proper mask to hide his identity?
+
+This class is designed for hiding from search engines one fact. The fact that your requests are automated by python script. It uses different technics such as
+changing user-agent header, refer and proxy servers. When you create instance of that class you must provide url of source of proxy servers list like this:
+
+```
+mask = RobberMask("https://freeproxyupdate.com/files/txt/http.txt")
+```
+
+List must be in plain text format where one string equals one ip address with port or some kind of comment starting with #. Example:
+
+```
+## Top 50 Updated Free Proxy IP Address
+## 09-29-2023 15:17 (UTC-6 Chicago)
+47.88.3.19:8080
+67.43.227.227:30983
+91.107.247.138:4000
+118.33.139.176:80
+121.4.20.187:20000
+```
+
+Sometimes list will be very long. RobberMask checks every ip address presented so it will many time to complete this checking. Instead of that you can specify upper limit for number of checked proxy servers like that:
+
+```
+mask = RobberMask("https://freeproxyupdate.com/files/txt/http.txt", 10)
+```
+
+It will check ten ip addresses and then stop checking.
+
+Creating instance of RobberMask takes time depending on proxy servers list size and its limit.
 
 ### Stealing Strategies Classes
 
