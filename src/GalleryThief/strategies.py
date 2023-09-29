@@ -6,12 +6,20 @@ from bs4 import BeautifulSoup
 
 from .mask import RobberMask
 
-PROXY_SOURCE = "https://freeproxyupdate.com/files/txt/http.txt"
-
 StealingResult = List[str]
 
 
 class StealingStrategy(ABC):
+
+    @property
+    @abstractmethod
+    def mask(self) -> RobberMask:
+        return self._mask
+
+    @mask.setter
+    @abstractmethod
+    def mask(self, mask) -> None:
+        self._mask = mask
 
     @abstractmethod
     def get_images(self, prompt: str, count: int) -> StealingResult:
@@ -76,7 +84,7 @@ class StealingFromYandex(StealingStrategy):
         file_type: YandexFileType = YandexFileType.ANY,
         color: YandexColor = YandexColor.ANY,
         site: str = '',
-        recent: bool = False,
+        recent: bool = False
     ):
         '''
         Initializes strategy for getting images from Yandex with given params.
@@ -98,12 +106,6 @@ class StealingFromYandex(StealingStrategy):
         self._color: YandexColor = color
         self._site: str = site
         self._recent: bool = recent
-
-        self._mask = RobberMask(
-            source=PROXY_SOURCE,
-            url="https://yandex.ru/images/search",
-            proxies_limit=10
-        )
 
     @property
     def size(self) -> YandexSizes:
@@ -160,6 +162,14 @@ class StealingFromYandex(StealingStrategy):
     @recent.setter
     def recent(self, recent) -> None:
         self._recent = recent
+
+    @property
+    def mask(self) -> RobberMask:
+        return self._mask
+
+    @mask.setter
+    def mask(self, mask) -> None:
+        self._mask = mask
 
     def get_images(self, prompt: str, count: int = 1) -> StealingResult:
 

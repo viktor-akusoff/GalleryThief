@@ -1,3 +1,4 @@
+from GalleryThief.mask import RobberMask
 from .strategies import StealingStrategy
 
 
@@ -6,9 +7,15 @@ class Thief():
     Performer for executing given StealingStrategy.
     '''
 
-    def __init__(self, strategy: StealingStrategy):
-        '''Initializes Thief with given StealingStrategy.'''
+    def __init__(self, strategy: StealingStrategy, mask: RobberMask):
+        '''
+        Initializes Thief with given StealingStrategy and RobberMask.
+
+        StealingStrategy -> describes algorithm of getting images.
+        RobberMask -> describes where to get fresh list of proxy servers.
+        '''
         self._strategy: StealingStrategy = strategy
+        self._strategy.mask = mask
 
     @property
     def strategy(self) -> StealingStrategy:
@@ -17,6 +24,14 @@ class Thief():
     @strategy.setter
     def strategy(self, strategy):
         self._strategy = strategy
+
+    @property
+    def mask(self) -> RobberMask:
+        return self._mask
+
+    @mask.setter
+    def mask(self, mask):
+        self._mask = mask
 
     def get_images_list(self, *args):
         '''
