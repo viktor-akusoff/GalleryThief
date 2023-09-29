@@ -72,7 +72,7 @@ class RobberMask():
                 proxies={"http": f"http://{ip}:{port}"}
             )
 
-            if response.status_code == 200:
+            if response.ok:
                 break
 
         return response.text
