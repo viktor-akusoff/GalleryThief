@@ -22,7 +22,7 @@ It isn't fast because it tries to keep all the captcha stuff away by changing Us
 refer every its request. It also has some kind of a cool down between two requests to make them
 less repetitive and suspicious.
 
-First run takes a while because it loads proxy list from [freeproxyupdate.com](https://freeproxyupdate.com).
+First run takes a while because it loads proxy list from given url address.
 After that you can send several requests and they will be processed much faster than an initial run.
 
 ## Quick Start
