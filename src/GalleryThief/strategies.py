@@ -169,7 +169,7 @@ class StealingFromYandex(StealingStrategy):
 
     @mask.setter
     def mask(self, mask) -> None:
-        self._mask = mask
+        self._mask: RobberMask = mask
 
     def get_images(self, prompt: str, count: int = 1) -> StealingResult:
 
@@ -198,7 +198,10 @@ class StealingFromYandex(StealingStrategy):
         if self._recent:
             params["recent"] = "7D"
 
-        request = self._mask.reach_out(params)
+        request = self._mask.reach_out(
+            "https://yandex.ru/images/search",
+            params
+        )
 
         soup = BeautifulSoup(request, 'html.parser')
         items_place = soup.find('div', {"class": "serp-list"})

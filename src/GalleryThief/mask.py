@@ -36,12 +36,11 @@ class RobberMask():
     Implements captcha avoiding algorithm.
     '''
 
-    def __init__(self, source: str, url: str, proxies_limit: int = 0) -> None:
+    def __init__(self, source: str, proxies_limit: int = 0) -> None:
         '''
         Initializing RobberMask and loading proxy servers list.
 
         source -> url of proxies list in txt format.\n
-        url -> url address you want to connect using mask.\n
         proxies_limit -> how many servers must be checked.\n
                          if 0 or less then all of them in list.
         '''
@@ -60,10 +59,9 @@ class RobberMask():
 
         self._proxies: ProxyList = [p for p in unchecked if check_proxy(**p)]
         self._current_proxy: Proxy = {}
-        self._url = url
         self._time_mark = 0
 
-    def reach_out(self, params: Dict = {}) -> str:
+    def reach_out(self, url: str, params: Dict = {}) -> str:
         while self._time_mark > time.time():
             pass
         self._time_mark = time.time() + rnd.uniform(2.0, 4.0)
@@ -78,7 +76,7 @@ class RobberMask():
             ip = current_proxy['ip']
             port = current_proxy['port']
             response = requests.get(
-                self._url,
+                url,
                 params=params,
                 headers=headers,
                 proxies={"http": f"http://{ip}:{port}"}
