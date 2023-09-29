@@ -27,11 +27,11 @@ class Thief():
 
     @property
     def mask(self) -> RobberMask:
-        return self._mask
+        return self._strategy._mask
 
     @mask.setter
     def mask(self, mask):
-        self._mask = mask
+        self._strategy._mask = mask
 
     def get_images_list(self, *args):
         '''
