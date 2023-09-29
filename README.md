@@ -3,6 +3,7 @@
 
 ![Gallery Thief Logo](https://i.imgur.com/j3TgyZc.png)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Upload Python Package](https://github.com/viktor-akusoff/GalleryThief/actions/workflows/python-publish.yml/badge.svg)](https://github.com/viktor-akusoff/GalleryThief/actions/workflows/python-publish.yml)
 
 > Gallery Thief, an artful liar\
