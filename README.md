@@ -3,6 +3,8 @@
 
 ![Gallery Thief Logo](https://i.imgur.com/j3TgyZc.png)
 
+[![Upload Python Package](https://github.com/viktor-akusoff/GalleryThief/actions/workflows/python-publish.yml/badge.svg)](https://github.com/viktor-akusoff/GalleryThief/actions/workflows/python-publish.yml)
+
 > Gallery Thief, an artful liar\
 > Cunningly steals your heart's desire.\
 > Python library, so refined,\
