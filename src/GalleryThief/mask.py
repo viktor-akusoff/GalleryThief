@@ -32,12 +32,24 @@ def check_proxy(ip: str, port: str) -> bool:
 
 
 class RobberMask():
+    '''
+    Implements captcha avoiding algorithm.
+    '''
 
     def __init__(self, source: str, url: str, proxies_limit: int = 0) -> None:
+        '''
+        Initializing RobberMask and loading proxy servers list.
+
+        source -> url of proxies list in txt format.\n
+        url -> url address you want to connect using mask.\n
+        proxies_limit -> how many servers must be checked.\n
+                         if 0 or less then all of them in list.
+        '''
+
         proxies_response = requests.get(source)
         proxies_txt = proxies_response.text
         proxies_list = proxies_txt.split('\n')
-        if proxies_limit:
+        if proxies_limit > 0:
             proxies_list = proxies_list[0:proxies_limit-1]
         unchecked = [
             {
