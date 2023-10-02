@@ -143,4 +143,22 @@ Let's look at them!
 
 2. #### StealingFromGoogle
 
-    Work in progress...
+    ```
+    StealingFromGoogle(
+        self,
+        size: GoogleSizes = GoogleSizes.ANY,
+        image_type: GoogleImageType = GoogleImageType.ANY,
+        last_time: GoogleLastTimeUsed = GoogleLastTimeUsed.ANY,
+        color: GoogleColor = GoogleColor.ANY,
+        license: GoogleLicense = GoogleLicense.ANY,
+    ):
+    ```
+    Params description:
+
+    | Parameter     | Description   |
+    | ------------- | ------------- |
+    | size | selects images of one of special size groups (LARGE, MEDIUM, ICONS, ANY) |
+    | image_type | selects images by their type (CLIPART, LINEART, ANIMATED, ANY) |
+    | last_time | selects images by the period of time they were published in (DAY, WEEK, MONTH, YEAR, ANY) |
+    | color | selects images by dominant color in them (BLACK_AND_WHITE, TRANSPARENT, RED, ORANGE, YELLOW, GREEN, TEAL, BLUE, PURPLE, PINK, WHITE, GRAY, BLACK, BROWN, ANY) |
+    | license | selects images by type of license (CREATIVE_COMMONS, COMMERCIAL, ANY) |
