@@ -49,7 +49,7 @@ print(result)
 
 ## Guide
 
-Gallery Thief uses several classes to retrieve images from search engines (Google, Yandex, Bing, etc.)
+Gallery Thief uses several classes to retrieve images from search engines (Google, Yandex and etc.)
 
 You should know them to achieve full potential of this little package.
 
