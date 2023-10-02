@@ -348,7 +348,7 @@ class StealingFromGoogle(StealingStrategy):
 
         result: StealingResult = []
 
-        params = {    
+        params = {
             "q": prompt,
             "tbm": "isch",
         }
