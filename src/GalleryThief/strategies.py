@@ -373,7 +373,7 @@ class StealingFromGoogle(StealingStrategy):
             else:
                 tbs.append('ic:specific')
                 tbs.append('isc:' + self._color.value)
-                
+
         if self._license != GoogleLicense.ANY:
             tbs.append('il:' + self._license.value)
 
