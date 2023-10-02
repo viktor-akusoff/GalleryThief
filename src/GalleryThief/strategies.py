@@ -1,9 +1,9 @@
 import json
+import re
 from abc import ABC, abstractmethod
 from typing import List
 from enum import Enum
 from bs4 import BeautifulSoup
-
 from .mask import RobberMask
 
 StealingResult = List[str]
@@ -223,7 +223,187 @@ class StealingFromYandex(StealingStrategy):
         return result
 
 
+class GoogleSizes(Enum):
+    LARGE = 'l'
+    MEDIUM = 'm'
+    ICONS = 'i'
+    ANY = 'any'
+
+
+class GoogleImageType(Enum):
+    CLIPART = 'clipart'
+    LINEART = 'lineart'
+    ANIMATED = 'animated'
+    ANY = 'any'
+
+
+class GoogleLastTimeUsed(Enum):
+    DAY = 'd'
+    WEEK = 'w'
+    MONTH = 'm'
+    YEAR = 'y'
+    ANY = 'any'
+
+
+class GoogleColor(Enum):
+    BLACK_AND_WHITE = 'gray'
+    TRANSPARENT = 'trans'
+    RED = 'red'
+    ORANGE = 'orange'
+    YELLOW = 'yellow'
+    GREEN = 'green'
+    TEAL = 'teal'
+    BLUE = 'blue'
+    PURPLE = 'purple'
+    PINK = 'pink'
+    WHITE = 'white'
+    GRAY = 'gray'
+    BLACK = 'black'
+    BROWN = 'brown'
+    ANY = 'any'
+
+
+class GoogleLicense(Enum):
+    CREATIVE_COMMONS = 'cl'
+    COMMERCIAL = 'ol'
+    ANY = 'any'
+
+
 class StealingFromGoogle(StealingStrategy):
 
+    def __init__(
+        self,
+        size: GoogleSizes = GoogleSizes.ANY,
+        image_type: GoogleImageType = GoogleImageType.ANY,
+        last_time: GoogleLastTimeUsed = GoogleLastTimeUsed.ANY,
+        color: GoogleColor = GoogleColor.ANY,
+        license: GoogleLicense = GoogleLicense.ANY,
+    ):
+        '''
+        Initializes strategy for getting images from Google with given params.
+
+        size -> (LARGE, MEDIUM, ICONS, ANY)\n
+        image_type -> (CLIPART, LINEART, ANIMATED, ANY)\n
+        last_time -> (DAY, WEEK, MONTH, YEAR, ANY)\n
+        color -> (BLACK_AND_WHITE, TRANSPARENT, RED, ORANGE, YELLOW, GREEN,\
+                  TEAL, BLUE, PURPLE, PINK, WHITE, GRAY, BLACK, BROWN, ANY)\n
+        license -> (CREATIVE_COMMONS, COMMERCIAL, ANY)\n
+        '''
+
+        self._size: GoogleSizes = size
+        self._image_type: GoogleImageType = image_type
+        self._last_time: GoogleLastTimeUsed = last_time
+        self._color: GoogleColor = color
+        self._license: GoogleLicense = license
+
+    @property
+    def size(self) -> GoogleSizes:
+        return self._size
+
+    @size.setter
+    def size(self, size) -> None:
+        self._size = size
+
+    @property
+    def mask(self) -> RobberMask:
+        return self._mask
+
+    @mask.setter
+    def mask(self, mask) -> None:
+        self._mask: RobberMask = mask
+
+    @property
+    def image_type(self) -> GoogleImageType:
+        return self._image_type
+
+    @image_type.setter
+    def image_type(self, image_type) -> None:
+        self._image_type = image_type
+
+    @property
+    def last_time(self) -> GoogleLastTimeUsed:
+        return self._last_time
+
+    @last_time.setter
+    def last_time(self, last_time) -> None:
+        self._last_time = last_time
+
+    @property
+    def license(self) -> GoogleLicense:
+        return self._license
+
+    @license.setter
+    def license(self, license) -> None:
+        self._license = license
+
+    @property
+    def color(self) -> GoogleColor:
+        return self._color
+
+    @color.setter
+    def color(self, color) -> None:
+        self._color = color
+
     def get_images(self, prompt: str, count: int) -> StealingResult:
-        return []
+
+        result: StealingResult = []
+
+        params = {    
+            "q": prompt,
+            "tbm": "isch",
+        }
+
+        tbs = []
+
+        if self._size != GoogleSizes.ANY:
+            tbs.append('isz:' + self._size.value)
+
+        if self._image_type != GoogleImageType.ANY:
+            tbs.append('itp:' + self._image_type.value)
+
+        if self._last_time != GoogleLastTimeUsed.ANY:
+            tbs.append('qrd:' + self._last_time.value)
+
+        if self._color != GoogleColor.ANY:
+            if self._color in (
+                GoogleColor.BLACK_AND_WHITE,
+                GoogleColor.TRANSPARENT
+            ):
+                tbs.append('ic:' + self._color.value)
+            else:
+                tbs.append('ic:specific')
+                tbs.append('isc:' + self._color.value)
+                
+        if self._license != GoogleLicense.ANY:
+            tbs.append('il:' + self._license.value)
+
+        if tbs:
+            params["tbs"] = ",".join(tbs)
+
+        request = self._mask.reach_out(
+            "https://www.google.com/search",
+            params
+        )
+
+        soup = BeautifulSoup(request, 'html.parser')
+
+        all_script_tags = soup.select("script")
+
+        matched_images_data = "".join(str(all_script_tags))
+
+        result = [
+            f"https://{x}" for x in re.findall(
+                r'"https:\/\/([^"]*)",\d*,\d*',
+                matched_images_data
+            )
+            if ('.jpg' in x)
+            or ('.gif' in x)
+            or ('.webp' in x)
+            or ('.png' in x)
+            or ('.jpeg' in x)
+        ]
+
+        if count:
+            result = result[:count]
+
+        return result
